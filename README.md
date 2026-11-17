@@ -1,16 +1,21 @@
 # Verkkokaupan testiautomaatio (Robot Framework & Python)
 
-Tämä projekti sisältää automatisoituja UI-testejä [SauceDemo](https://www.saucedemo.com/) -esimerkkiverkkokauppaan. Projekti on toteutettu osana ohjelmistotestauksen ja testiautomaation oppimista.
+![Robot Framework Testit](https://github.com/Laolli735/ekat-automaatiotestit/actions/workflows/testit.yml/badge.svg)
+
+Tämä projekti sisältää automatisoituja UI-testejä [SauceDemo](https://www.saucedemo.com/) -esimerkkiverkkokauppaan. Projekti on toteutettu osana ohjelmistotestauksen ja testiautomaation oppimista, ja testit ajetaan automaattisesti jokaisen muutoksen yhteydessä GitHub Actions -putkessa.
 
 ## Käytetyt teknologiat
 * **Robot Framework** – Testitapausten ja avainsanojen määrittely
 * **Browser Library (Playwright)** – Moderni selainautomaatio (Chromium)
-* **Python 3.12** – Omat apufunktiot ja testidatan generointi
+* **Python 3.12** – Omat apufunktiot ja dynaamisen testidatan generointi
+* **GitHub Actions** – Jatkuva integraatio (CI) ja automaattinen testiajo pilvessä
 
 ## Projektin rakenne
 * `kirjautuminen.robot` – Kirjautumistoiminnallisuuden positiiviset ja negatiiviset testitapaukset
-* `apufunktiot.py` – Pythonilla toteutettu apukirjasto dynaamisen testidatan (kuten satunnaisten salasanojen) luontiin
-* `.gitignore` – Pitää testiraportit (`log.html`, `report.html`) ja väliaikaistiedostot poissa versionhallinnasta
+* `ostoskori.robot` – Tuotteen ostoskoriin lisäämisen ja poistamisen testitapaukset
+* `resurssit.resource` – Yhteiset muuttujat ja uudelleenkäytettävät avainsanat
+* `apufunktiot.py` – Pythonilla toteutettu apukirjasto satunnaisten salasanojen luontiin
+* `.github/workflows/testit.yml` – GitHub Actions CI-työnkulun määrittely
 
 ## Testien ajaminen omalla koneella
 
