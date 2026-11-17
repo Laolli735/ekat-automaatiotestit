@@ -1,5 +1,7 @@
 import os
+import shutil
 import email
+from datetime import datetime
 from email.message import EmailMessage
 
 def luo_testisahkopostit(saapuneet_kansio):
@@ -53,10 +55,12 @@ def luo_testisahkopostit(saapuneet_kansio):
             f.write(bytes(msg))
 
 
-def kasittele_laskut_kansiosta(saapuneet_kansio, kohdekansio, hakusana="Lasku"):
-    """Etsii viesteistä laskut ja tallentaa PDF-liitteet kohdekansioon."""
+def kasittele_laskut_kansiosta(saapuneet_kansio, kohdekansio, kasitellyt_kansio, hakusana="Lasku"):
+    """Etsii laskut, nimeää PDF-liitteet päivämäärällä ja siirtää käsitellyt viestit."""
     os.makedirs(kohdekansio, exist_ok=True)
+    os.makedirs(kasitellyt_kansio, exist_ok=True)
     tallennetut = []
+    paivamaara = datetime.now().strftime("%Y-%m-%d")
 
     for tiedostonimi in os.listdir(saapuneet_kansio):
         if not tiedostonimi.endswith(".eml"):
@@ -76,9 +80,13 @@ def kasittele_laskut_kansiosta(saapuneet_kansio, kohdekansio, hakusana="Lasku"):
 
                 liite = osa.get_filename()
                 if liite and liite.lower().endswith(".pdf"):
-                    kohdepolku = os.path.join(kohdekansio, liite)
+                    uusi_nimi = f"{paivamaara}_{liite}"
+                    kohdepolku = os.path.join(kohdekansio, uusi_nimi)
                     with open(kohdepolku, "wb") as pdf_tiedosto:
                         pdf_tiedosto.write(osa.get_payload(decode=True))
-                    tallennetut.append(liite)
+                    tallennetut.append(uusi_nimi)
+
+            # Siirretään käsitelty laskuviesti pois saapuneista
+            shutil.move(polku, os.path.join(kasitellyt_kansio, tiedostonimi))
 
     return tallennetut
