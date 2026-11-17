@@ -30,7 +30,7 @@ jobs:
           rfbrowser init chromium
 
       - name: Aja testit headless-tilassa
-        run: robot --variable HEADLESS:True .
+        run: robot --rpa --variable HEADLESS:True .
 
       - name: Tallenna testiraportit
         if: always()
