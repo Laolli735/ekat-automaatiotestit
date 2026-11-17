@@ -6,10 +6,11 @@ Library           apufunktiot.py
 ${URL}            https://www.saucedemo.com/
 ${KAYTTAJA}       standard_user
 ${SALASANA}       secret_sauce
+${HEADLESS}       False
 
 *** Keywords ***
 Avaa Verkkokauppa
-    New Browser    chromium    headless=False
+    New Browser    chromium    headless=${HEADLESS}
     New Page       ${URL}
 
 Syota Tunnukset Ja Kirjaudu
