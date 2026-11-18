@@ -7,14 +7,14 @@ on:
     branches: [ main ]
 
 jobs:
-  run-tests:
+  testit:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Hae koodi repositoriosta
+      - name: Hae koodi
         uses: actions/checkout@v4
 
-      - name: Asenna Python 3.12
+      - name: Asenna Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -24,13 +24,14 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Asenna Robot Framework ja Browser Library
+      - name: Asenna kirjastot
         run: |
-          pip install robotframework robotframework-browser
+          python -m pip install --upgrade pip
+          pip install robotframework robotframework-browser robotframework-requests
           rfbrowser init chromium
 
-      - name: Aja testit headless-tilassa
-        run: robot --rpa --variable HEADLESS:True .
+      - name: Aja Robot Framework -testit ja RPA-robotit
+        run: robot --rpa .
 
       - name: Tallenna testiraportit
         if: always()
@@ -38,10 +39,6 @@ jobs:
         with:
           name: robot-raportit
           path: |
-            log.html
             report.html
-            - name: Asenna kirjastot
-        run: |
-          python -m pip install --upgrade pip
-          pip install robotframework robotframework-browser robotframework-requests
-          rfbrowser init chromium
+            log.html
+            output.xml

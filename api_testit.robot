@@ -16,7 +16,7 @@ Hae Kayttajan Tiedot Rajapinnasta (GET)
 
     # Puretaan JSON-vastaus sanakirjaksi ja tarkistetaan kentät
     ${json_data}=     Set Variable    ${vastaus.json()}
-    Should Be Equal As Strings    ${json_data}[username]    VaaraNimi
+    Should Be Equal As Strings    ${json_data}[username]    Bret
     Should Be Equal As Strings    ${json_data}[email]       Sincere@april.biz
 
 Luo Uusi Tehtava Rajapintaan (POST)
